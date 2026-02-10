@@ -1432,85 +1432,70 @@ footer a:hover {
     }
 
     .navbar-brand {
-        font-size: 1.2rem;
+        font-size: 1.15rem;
     }
 
     .container {
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: 12px;
+        padding-right: 12px;
     }
 
     section {
-        padding: 2.5rem 0;
+        padding: 3rem 0;
     }
 
     .hero-section {
-        padding: 70px 0 30px;
+        padding: 80px 0 2rem;
+        text-align: center;
     }
 
     .hero-content h1 {
-        font-size: 1.75rem;
-    }
-
-    .hero-buttons .btn {
-        padding: 0.65rem 1.5rem;
-        font-size: 0.9rem;
+        font-size: 2rem;
+        line-height: 1.25;
     }
 
     .hero-buttons {
+        display: flex;
         flex-direction: column;
-        align-items: center;
+        gap: 12px;
+        margin-top: 20px;
     }
 
     .hero-buttons .btn {
-        width: 100%;
-        max-width: 250px;
-    }
-
-    .social-link {
-        width: 45px;
-        height: 45px;
-        font-size: 1.25rem;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0.8rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .hero-profile-image {
-        width: 200px;
-        height: 200px;
-    }
-
-    .code-window {
-        font-size: 0.85rem;
-    }
-
-    .code-header {
-        padding: 0.75rem;
-    }
-
-    .dot {
-        width: 10px;
-        height: 10px;
+        width: 180px;
+        height: 180px;
+        margin: 20px auto;
     }
 
     .section-title {
-        font-size: 1.6rem;
+        font-size: 1.75rem;
+        margin-bottom: 2.5rem;
     }
 
-    .skill-items .badge,
-    .project-tags .badge {
-        font-size: 0.8rem;
-        padding: 0.4rem 0.7rem;
+    .project-card {
+        margin-bottom: 1rem;
     }
 
     .project-image {
         height: 180px;
     }
 
-    .contact-card {
-        padding: 1.5rem 1rem;
+    .contact-form-card {
+        padding: 1.5rem 1rem !important;
     }
 
-    .form-control {
-        font-size: 16px !important;
+    .btn-submit-modern {
+        font-size: 1rem;
+        padding: 1rem;
     }
 
     .back-to-top,
@@ -1519,56 +1504,65 @@ footer a:hover {
         height: 45px;
         bottom: 15px;
     }
+}
 
-    .back-to-top {
-        left: 15px;
-    }
+/* حل نهائي لمشكلة الهوامش الجانبية */
+body {
+    overflow-x: hidden !important;
+}
 
-    .whatsapp-float {
-        right: 15px;
-        font-size: 22px;
+.row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.container {
+    max-width: 100% !important;
+}
+
+@media (min-width: 576px) {
+    .container {
+        max-width: 540px !important;
     }
 }
 
-/* Extra Small Devices (< 375px) */
-@media (max-width: 374.98px) {
-    html {
-        font-size: 13px;
-    }
-
-    .hero-content h1 {
-        font-size: 1.5rem;
-    }
-
-    .hero-profile-image {
-        width: 180px;
-        height: 180px;
-    }
-
-    .section-title {
-        font-size: 1.4rem;
-    }
-
-    .project-image {
-        height: 160px;
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px !important;
     }
 }
 
-/* Large Screens (1400px+) */
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px !important;
+    }
+}
+
 @media (min-width: 1400px) {
     .container {
-        max-width: 1320px;
-    }
-
-    .hero-profile-image {
-        width: 350px;
-        height: 350px;
-    }
-
-    .section-title {
-        font-size: 2.75rem;
+        max-width: 1320px !important;
     }
 }
+
+.hero-profile-image {
+    width: 350px;
+}
+
+.hero-profile-image {
+    width: 350px;
+    height: 350px;
+}
+
+.section-title {
+    font-size: 2.75rem;
+}
+
 
 /* ===== Performance Optimizations ===== */
 img {

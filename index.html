@@ -2,45 +2,81 @@
 <html lang="ar" dir="rtl">
 
 <head>
+  <!-- SEO and Performance Optimized Meta Tags -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="عبدالملك سعد - مطور مواقع ويب محترف متخصص في تطوير مواقع حديثة وسريعة" />
   <meta name="theme-color" content="#4a90e2" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <!-- Cache Control - Prevent caching during development -->
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
+
   <link rel="icon" type="image/png" href="images/image.png" />
   <title>عبدالملك سعد | مطور مواقع الويب</title>
 
   <!-- Manifest -->
   <link rel="manifest" href="manifest.json" />
 
-  <!-- Preconnect and DNS Prefetch to external domains -->
-  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
-  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+  <!-- Preconnect and DNS Prefetch to external domains (Prioritized) -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
 
-  <!-- Preload critical resources -->
-  <link rel="preload" href="style.css?v=5" as="style" fetchpriority="high" />
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap"
-    as="style" fetchpriority="high" />
-  <link rel="preload" href="images/image.png" as="image" type="image/png" fetchpriority="high" />
+  <!-- Critical Preloads -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" as="style" />
+  <link rel="preload" href="style.css?v=6" as="style" />
+  <link rel="preload" href="images/image.png" as="image" fetchpriority="high" />
 
-  <!-- Google Fonts with font-display=swap for better performance -->
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
-  <!-- Bootstrap 5 CSS - minified -->
+  <!-- Stylesheets -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet"
+    media="print" onload="this.media='all'" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
-  <!-- Bootstrap Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.min.css" />
-  <!-- Custom CSS with version parameter for cache busting -->
-  <link rel="stylesheet" href="style.css?v=5" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.min.css"
+    media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="style.css?v=6" />
+  <style>
+    /* Critical CSS for Instant Loading */
+    :root {
+      --primary-color: #4a90e2;
+      --dark-color: #1a1a2e;
+    }
+
+    body {
+      background-color: #f8f9fa;
+      opacity: 1;
+      transition: opacity 0.3s;
+    }
+
+    .navbar {
+      background: rgba(26, 26, 46, 0.95) !important;
+      backdrop-filter: blur(10px);
+      min-height: 70px;
+    }
+
+    .hero-section {
+      background: var(--dark-color);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 3rem;
+      position: relative;
+      display: inline-block;
+    }
+  </style>
+
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.min.css" />
+  </noscript>
 </head>
 
 <body>
@@ -316,7 +352,7 @@
           <div class="project-card">
             <div class="project-image">
               <img src="images/project1-ai-courser.svg" alt="موقع دورات الذكاء الاصطناعي" width="800" height="600"
-                loading="lazy" />
+                loading="lazy" decoding="async" />
               <div class="project-overlay">
                 <a href="https://qaszxcv14780acii-afk.github.io/ai-website-courser/" class="btn btn-light"
                   target="_blank" rel="noopener noreferrer"><i class="bi bi-eye me-2"></i>عرض المشروع</a>
@@ -345,7 +381,8 @@
         <div class="col-md-6 col-lg-4">
           <div class="project-card">
             <div class="project-image">
-              <img src="images/project2-nasr.svg" alt="مشروع نصر" width="800" height="600" loading="lazy" />
+              <img src="images/project2-nasr.svg" alt="مشروع نصر" width="800" height="600" loading="lazy"
+                decoding="async" />
               <div class="project-overlay">
                 <a href="https://qaszxcv14780acii-afk.github.io/Nasr/" class="btn btn-light" target="_blank"
                   rel="noopener noreferrer"><i class="bi bi-eye me-2"></i>عرض المشروع</a>
@@ -371,7 +408,7 @@
           <div class="project-card">
             <div class="project-image">
               <img src="images/project3-ai-website.svg" alt="موقع الذكاء الاصطناعي" width="800" height="600"
-                loading="lazy" />
+                loading="lazy" decoding="async" />
               <div class="project-overlay">
                 <a href="https://qaszxcv14780acii-afk.github.io/ai-website/" class="btn btn-light" target="_blank"
                   rel="noopener noreferrer"><i class="bi bi-eye me-2"></i>عرض المشروع</a>
@@ -588,7 +625,7 @@
     defer></script>
 
   <!-- Custom JS with version parameter for cache busting -->
-  <script src="script.js?v=5" defer></script>
+  <script src="script.js?v=6" defer></script>
 </body>
 
 </html>

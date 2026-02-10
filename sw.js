@@ -1,15 +1,15 @@
 // Service Worker for Portfolio Website
-// Version: 4.0
-const CACHE_NAME = "portfolio-cache-v4";
+// Version: 6.0
+const CACHE_NAME = "portfolio-cache-v6";
 const urlsToCache = [
-  "/",
-  "/index.html",
-  "/style.css?v=4",
-  "/script.js",
-  "/images/image.png",
-  "/images/project1-ai-courser.svg",
-  "/images/project2-nasr.svg",
-  "/images/project3-ai-website.svg",
+  "./",
+  "./index.html",
+  "./style.css?v=6",
+  "./script.js?v=6",
+  "./images/image.png",
+  "./images/project1-ai-courser.svg",
+  "./images/project2-nasr.svg",
+  "./images/project3-ai-website.svg",
 ];
 
 // Install event - cache resources
@@ -23,53 +23,37 @@ self.addEventListener("install", (event) => {
   self.skipWaiting();
 });
 
-// Fetch event - Network first, then cache for HTML/JS/CSS, cache first for images
+// Fetch event - Cache First, then Network
 self.addEventListener("fetch", (event) => {
-  const request = event.request;
-  const url = new URL(request.url);
-
-  // For HTML, JS, CSS files - use Network First strategy (always get fresh version)
-  if (url.pathname.match(/\.(html|js|css)$/)) {
-    event.respondWith(
-      fetch(request)
-        .then((response) => {
-          // Update cache with fresh version
-          if (response && response.status === 200) {
-            const responseToCache = response.clone();
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      // Return cached response if found
+      if (response) {
+        // Fetch fresh version in background for NEXT time (Stale-While-Revalidate)
+        fetch(event.request).then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
             caches.open(CACHE_NAME).then((cache) => {
-              cache.put(request, responseToCache);
+              cache.put(event.request, networkResponse);
             });
           }
-          return response;
-        })
-        .catch(() => {
-          // Fallback to cache if network fails
-          return caches.match(request);
-        }),
-    );
-    return;
-  }
-
-  // For images and other assets - use Cache First strategy
-  event.respondWith(
-    caches.match(request).then((response) => {
-      if (response) {
+        }).catch(() => { });
         return response;
       }
 
-      return fetch(request).then((response) => {
-        if (!response || response.status !== 200 || response.type !== "basic") {
-          return response;
+      // If not in cache, fetch from network
+      return fetch(event.request).then((networkResponse) => {
+        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== "basic") {
+          return networkResponse;
         }
 
-        const responseToCache = response.clone();
+        const responseToCache = networkResponse.clone();
         caches.open(CACHE_NAME).then((cache) => {
-          cache.put(request, responseToCache);
+          cache.put(event.request, responseToCache);
         });
 
-        return response;
+        return networkResponse;
       });
-    }),
+    })
   );
 });
 
