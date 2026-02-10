@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "development"
+  ],
+  "hints": {
+    "disown-opener": "off",
+    "button-type": "off",
+    "axe/name-role-value": "off",
+    "no-inline-styles": "off",
+    "axe/aria": "off",
+    "compat-api/html": "off",
+    "apple-touch-icons": "off"
+  }
+}
