@@ -146,7 +146,7 @@ window.open(whatsappURL, '_blank');
 
 ### تغيير رقم الواتساب:
 ```javascript
-// في ملف script.js - السطر 250
+// في ملف script.js - السطر 362
 const whatsappNumber = "967779830449"; // غير هذا الرقم
 
 // ملاحظة: الرقم بدون + أو 00
@@ -294,7 +294,7 @@ const whatsappMessage = `
 +967 779 830 449
 ```
 
-لتغيير الرقم، عدّل السطر 250 في `script.js`
+لتغيير الرقم، عدّل السطر 362 في `script.js`
 
 ---
 
