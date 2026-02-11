@@ -9,15 +9,18 @@
   <meta name="theme-color" content="#4a90e2" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <!-- Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://cdn.jsdelivr.net;">
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PPB1KSB1YT"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PPB1KSB1YT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-  gtag('config', 'G-PPB1KSB1YT');
-</script>
+    gtag('config', 'G-PPB1KSB1YT');
+  </script>
 
   <link rel="icon" type="image/png" href="images/image.png" />
   <title>عبدالملك سعد | مطور مواقع الويب</title>
@@ -148,8 +151,8 @@
               </a>
             </div>
             <div class="social-links mt-5">
-              <a href="https://github.com/saadabdulmilksaad-svg" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i
-                  class="bi bi-github"></i></a>
+              <a href="https://github.com/saadabdulmilksaad-svg" class="social-link" target="_blank"
+                rel="noopener noreferrer" aria-label="GitHub"><i class="bi bi-github"></i></a>
               <a href="#" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i
                   class="bi bi-linkedin"></i></a>
               <a href="https://x.com/BdalmlkA45278" class="social-link" target="_blank" rel="noopener noreferrer"

@@ -170,6 +170,11 @@ if (backToTopButton) {
   });
 }
 
+// ===== Safe Base64 Encoding Function =====
+function safeBtoa(str) {
+  return btoa(unescape(encodeURIComponent(str)));
+}
+
 // ===== Handle Missing Images =====
 const handleMissingImages = () => {
   const images = document.querySelectorAll('img[src*="images/"]');
@@ -178,7 +183,7 @@ const handleMissingImages = () => {
       // Create a simple SVG placeholder instead of external URL
       const svgPlaceholder =
         "data:image/svg+xml;base64," +
-        btoa(`
+        safeBtoa(`
         <svg width="300" height="300" xmlns="http://www.w3.org/2000/svg">
           <rect width="300" height="300" fill="#4a90e2"/>
           <text x="50%" y="50%" font-family="Cairo, Arial" font-size="20" fill="white" text-anchor="middle" dy=".3em">صورة</text>
@@ -484,26 +489,22 @@ const animateSkillCards = () => {
 // ===== Optimize Project Images =====
 const optimizeProjectImages = () => {
   const projectImages = document.querySelectorAll(".project-image img");
-function safeBtoa(str) {
-  return btoa(unescape(encodeURIComponent(str)));
-}
 
-projectImages.forEach((img) => {
-  img.addEventListener("error", function () {
-    const svgPlaceholder =
-      "data:image/svg+xml;base64," +
-      safeBtoa(`
+  projectImages.forEach((img) => {
+    img.addEventListener("error", function () {
+      const svgPlaceholder =
+        "data:image/svg+xml;base64," +
+        safeBtoa(`
         <svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
           <rect width="800" height="600" fill="#4a90e2"/>
           <text x="50%" y="50%" font-family="Cairo, Arial" font-size="24" fill="white" text-anchor="middle" dy=".3em">صورة المشروع</text>
         </svg>
       `);
 
-    this.src = svgPlaceholder;
-    this.alt = "صورة المشروع";
+      this.src = svgPlaceholder;
+      this.alt = "صورة المشروع";
+    });
   });
-});
-
 };
 
 // ===== Initialize all animations on page load =====
