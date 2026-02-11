@@ -484,22 +484,26 @@ const animateSkillCards = () => {
 // ===== Optimize Project Images =====
 const optimizeProjectImages = () => {
   const projectImages = document.querySelectorAll(".project-image img");
+function safeBtoa(str) {
+  return btoa(unescape(encodeURIComponent(str)));
+}
 
-  projectImages.forEach((img) => {
-    // Handle errors with local SVG placeholder
-    img.addEventListener("error", function () {
-      const svgPlaceholder =
-        "data:image/svg+xml;base64," +
-        btoa(`
+projectImages.forEach((img) => {
+  img.addEventListener("error", function () {
+    const svgPlaceholder =
+      "data:image/svg+xml;base64," +
+      safeBtoa(`
         <svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
           <rect width="800" height="600" fill="#4a90e2"/>
           <text x="50%" y="50%" font-family="Cairo, Arial" font-size="24" fill="white" text-anchor="middle" dy=".3em">صورة المشروع</text>
         </svg>
       `);
-      this.src = svgPlaceholder;
-      this.alt = "صورة المشروع";
-    });
+
+    this.src = svgPlaceholder;
+    this.alt = "صورة المشروع";
   });
+});
+
 };
 
 // ===== Initialize all animations on page load =====
