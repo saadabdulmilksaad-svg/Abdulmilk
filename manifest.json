@@ -2,7 +2,7 @@
   "name": "عبدالملك سعد - مطور مواقع الويب",
   "short_name": "عبدالملك سعد",
   "description": "موقع شخصي لمطور مواقع ويب محترف",
-  "start_url": "/",
+  "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#1a1a2e",
   "theme_color": "#4a90e2",
