@@ -17,7 +17,7 @@
 // };
 
 // Make clearSiteCache available globally for debugging
-window.clearSiteCache = clearSiteCache;
+// window.clearSiteCache = clearSiteCache;
 
 // ===== Performance Optimizations =====
 // Use passive event listeners for better scroll performance
