@@ -1,39 +1,4 @@
-// ===== Service Worker Registration with Update Handling =====
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("sw.js?v=6")
-      .then((registration) => {
-        console.log(
-          "Service Worker registered successfully:",
-          registration.scope,
-        );
 
-        // Check for updates
-        registration.addEventListener("updatefound", () => {
-          const newWorker = registration.installing;
-          console.log("Service Worker update found!");
-
-          newWorker.addEventListener("statechange", () => {
-            if (
-              newWorker.state === "installed" &&
-              navigator.serviceWorker.controller
-            ) {
-              // New service worker installed and waiting
-              console.log("New version available! Refresh to update.");
-              // Optional: Show update notification to user
-              if (confirm("تحديث جديد متاح! هل تريد تحديث الصفحة الآن؟")) {
-                window.location.reload();
-              }
-            }
-          });
-        });
-      })
-      .catch((error) => {
-        console.log("Service Worker registration failed:", error);
-      });
-  });
-}
 
 // ===== Cache Clear Function =====
 const clearSiteCache = () => {
