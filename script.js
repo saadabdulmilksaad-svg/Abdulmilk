@@ -1,23 +1,58 @@
+// ===== Service Worker Registration with Update Handling =====
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("sw.js?v=6")
+      .then((registration) => {
+        console.log(
+          "Service Worker registered successfully:",
+          registration.scope,
+        );
 
+        // Check for updates
+        registration.addEventListener("updatefound", () => {
+          const newWorker = registration.installing;
+          console.log("Service Worker update found!");
 
-// // ===== Cache Clear Function =====
-// const clearSiteCache = () => {
-//   if ("caches" in window) {
-//     caches.keys().then((cacheNames) => {
-//       cacheNames.forEach((cacheName) => {
-//         caches.delete(cacheName);
-//         console.log("Cache deleted:", cacheName);
-//       });
-//     });
-//   }
-//   // Also clear localStorage and sessionStorage if needed
-//   localStorage.clear();
-//   sessionStorage.clear();
-//   console.log("All caches cleared!");
-// };
+          newWorker.addEventListener("statechange", () => {
+            if (
+              newWorker.state === "installed" &&
+              navigator.serviceWorker.controller
+            ) {
+              // New service worker installed and waiting
+              console.log("New version available! Refresh to update.");
+              // Optional: Show update notification to user
+              if (confirm("تحديث جديد متاح! هل تريد تحديث الصفحة الآن؟")) {
+                window.location.reload();
+              }
+            }
+          });
+        });
+      })
+      .catch((error) => {
+        console.log("Service Worker registration failed:", error);
+      });
+  });
+}
+
+// ===== Cache Clear Function =====
+const clearSiteCache = () => {
+  if ("caches" in window) {
+    caches.keys().then((cacheNames) => {
+      cacheNames.forEach((cacheName) => {
+        caches.delete(cacheName);
+        console.log("Cache deleted:", cacheName);
+      });
+    });
+  }
+  // Also clear localStorage and sessionStorage if needed
+  localStorage.clear();
+  sessionStorage.clear();
+  console.log("All caches cleared!");
+};
 
 // Make clearSiteCache available globally for debugging
-// window.clearSiteCache = clearSiteCache;
+window.clearSiteCache = clearSiteCache;
 
 // ===== Performance Optimizations =====
 // Use passive event listeners for better scroll performance
