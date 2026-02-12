@@ -1,20 +1,20 @@
 
 
-// ===== Cache Clear Function =====
-const clearSiteCache = () => {
-  if ("caches" in window) {
-    caches.keys().then((cacheNames) => {
-      cacheNames.forEach((cacheName) => {
-        caches.delete(cacheName);
-        console.log("Cache deleted:", cacheName);
-      });
-    });
-  }
-  // Also clear localStorage and sessionStorage if needed
-  localStorage.clear();
-  sessionStorage.clear();
-  console.log("All caches cleared!");
-};
+// // ===== Cache Clear Function =====
+// const clearSiteCache = () => {
+//   if ("caches" in window) {
+//     caches.keys().then((cacheNames) => {
+//       cacheNames.forEach((cacheName) => {
+//         caches.delete(cacheName);
+//         console.log("Cache deleted:", cacheName);
+//       });
+//     });
+//   }
+//   // Also clear localStorage and sessionStorage if needed
+//   localStorage.clear();
+//   sessionStorage.clear();
+//   console.log("All caches cleared!");
+// };
 
 // Make clearSiteCache available globally for debugging
 window.clearSiteCache = clearSiteCache;
