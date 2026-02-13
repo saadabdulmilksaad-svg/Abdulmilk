@@ -1,10 +1,11 @@
 /* ===== Global Styles ===== */
 :root {
-    --primary-color: #4a90e2;
-    --secondary-color: #50c878;
+    --primary-color: #357abd;
+    /* أغمق قليلاً لضمان التباين */
+    --secondary-color: #2e8b57;
     --dark-color: #1a1a2e;
     --light-color: #f8f9fa;
-    --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-1: linear-gradient(135deg, #4a90e2 0%, #1a1a2e 100%);
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
