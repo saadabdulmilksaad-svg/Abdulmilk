@@ -227,6 +227,10 @@ p.lead.text-muted {
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     animation: profileFloat 3s ease-in-out infinite;
+    aspect-ratio: 1 / 1;
+    /* تثبيت النسبة لمنع الـ CLS */
+    background: #1a1a2e;
+    /* خلفية مؤقتة */
 }
 
 .profile-img:hover {
@@ -595,8 +599,8 @@ section {
     position: relative;
     overflow: hidden;
     width: 100%;
-    padding-top: 75%;
-    /* 4:3 Aspect Ratio */
+    aspect-ratio: 4 / 3;
+    /* استخدام خاصية حديثة بدلاً من padding-top لدعم أفضل للمتصفحات */
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
@@ -1585,13 +1589,12 @@ body {
     }
 }
 
-.hero-profile-image {
-    width: 350px;
-}
-
+/* تم توحيد أبعاد الصورة لمنع التخبط في التصميم */
 .hero-profile-image {
     width: 350px;
     height: 350px;
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
 }
 
 .section-title {
