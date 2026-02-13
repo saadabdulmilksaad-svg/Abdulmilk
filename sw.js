@@ -1,12 +1,12 @@
 // Service Worker for Portfolio Website
-// Version: 6.0
-const CACHE_NAME = "portfolio-cache-v6";
+// Version: 7.0
+const CACHE_NAME = "portfolio-cache-v7";
 const urlsToCache = [
   "./",
   "./index.html",
-  "./style.css?v=6",
-  "./script.js?v=6",
-  "./images/image.png",
+  "./style.css?v=7",
+  "./script.js?v=7",
+  "./images/image.Webp",
   "./images/project1-ai-courser.svg",
   "./images/project2-nasr.svg",
   "./images/project3-ai-website.svg",

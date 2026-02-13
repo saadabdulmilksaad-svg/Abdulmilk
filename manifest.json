@@ -2,22 +2,22 @@
   "name": "عبدالملك سعد - مطور مواقع الويب",
   "short_name": "عبدالملك سعد",
   "description": "موقع شخصي لمطور مواقع ويب محترف",
-  "start_url": "/index.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#1a1a2e",
   "theme_color": "#4a90e2",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "images/image.png",
+      "src": "images/image.Webp",
       "sizes": "192x192",
-      "type": "image/png",
+      "type": "image/webp",
       "purpose": "any maskable"
     },
     {
-      "src": "images/image.png",
+      "src": "images/image.Webp",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/webp",
       "purpose": "any maskable"
     }
   ]
