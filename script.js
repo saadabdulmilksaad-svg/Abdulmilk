@@ -367,22 +367,29 @@ if (contactForm) {
     const whatsappNumber = "967779830449"; // رقم الواتساب (بدون + أو 00)
 
     // Format the message for WhatsApp
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('ar-YE');
+    const timeStr = now.toLocaleTimeString('ar-YE');
+
     const whatsappMessage = `
-🌟 *رسالة جديدة من الموقع* 🌟
+🚀 *رسالة جديدة من موقعك الشخصي* 🚀
+---------------------------------------
+📅 *التاريخ:* ${dateStr}
+⏰ *الوقت:* ${timeStr}
 
-👤 *الاسم:* ${name}
+👤 *تفاصيل المرسل:*
+- *الاسم:* ${name}
+- *الهاتف:* ${phone}
+- *البريد:* ${email}
 
-📞 *رقم الهاتف:* ${phone}
+📝 *موضوع الرسالة:*
+${subject}
 
-📧 *البريد الإلكتروني:* ${email}
-
-🏷️ *الموضوع:* ${subject}
-
-💬 *الرسالة:*
+💬 *نص المراسلة:*
 ${message}
 
----
-تم الإرسال من موقع عبدالملك سعد
+---------------------------------------
+✨ *تم الإرسال عبر نظام التواصل في موقع عبدالملك سعد*
     `.trim();
 
     // Encode the message for URL
