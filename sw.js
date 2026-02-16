@@ -1,12 +1,12 @@
 // Service Worker for Portfolio Website
-// Version: 7.0
-const CACHE_NAME = "portfolio-cache-v7";
+// Version: 8.0
+const CACHE_NAME = "portfolio-cache-v8";
 const urlsToCache = [
   "./",
   "./index.html",
-  "./style.css?v=7",
-  "./script.js?v=7",
-  "./images/image.Webp",
+  "./style.css?v=8",
+  "./script.js?v=8",
+  "./images/image.webp",
   "./images/project1-ai-courser.svg",
   "./images/project2-nasr.svg",
   "./images/project3-ai-website.svg",
@@ -16,7 +16,7 @@ const urlsToCache = [
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log("Opened cache v3");
+      console.log("Opened cache v8");
       return cache.addAll(urlsToCache);
     }),
   );
