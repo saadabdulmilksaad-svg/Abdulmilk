@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://abdulmilk-saad.netlify.app/sitemap.xml
+Sitemap: https://969c4240.abdulmilk.pages.dev/sitemap.xml
