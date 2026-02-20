@@ -571,6 +571,7 @@ section {
     display: flex;
     flex-direction: column;
     position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .project-card::before {
@@ -592,7 +593,7 @@ section {
 
 .project-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
 }
 
 .project-image {
@@ -689,19 +690,28 @@ section {
     font-size: 0.95rem;
 }
 
+/* Project Tags Styles */
 .project-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: auto;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
 }
 
-.project-tags .badge {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.85rem;
-    font-weight: 600;
-    border-radius: 20px;
-    transition: var(--transition);
+.badge-tech {
+    padding: 0.35rem 0.8rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 50px;
+    background: rgba(53, 122, 189, 0.1);
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.project-card:hover .badge-tech {
+    background: var(--primary-color);
+    color: #fff;
+    transform: translateY(-2px);
 }
 
 .project-card:hover .project-tags .badge {
