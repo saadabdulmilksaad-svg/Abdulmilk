@@ -200,6 +200,22 @@ p.lead.text-muted {
     color: #fff;
 }
 
+/* Typewriter Effect Styles */
+.typing-text {
+    color: var(--primary-color);
+    font-weight: 700;
+    position: relative;
+}
+
+.cursor {
+    display: inline-block;
+    width: 3px;
+    background-color: #fff;
+    animation: blink 1s infinite;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
 /* ===== Hero Image & Profile ===== */
 .hero-image {
     position: relative;
@@ -274,6 +290,18 @@ p.lead.text-muted {
     50% {
         transform: scale(1.1);
         opacity: 0.5;
+    }
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
     }
 }
 

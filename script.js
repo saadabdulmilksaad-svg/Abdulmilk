@@ -500,6 +500,48 @@ const optimizeProjectImages = () => {
   });
 };
 
+// ===== Typewriter Effect =====
+const initTypewriter = () => {
+  const typingElement = document.querySelector(".typing-text");
+  if (!typingElement) return;
+
+  const words = ["مطور مواقع ويب", "مهندس برمجيات", "مصمم واجهات UI/UX", "Freelancer"];
+  let wordIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+  let typeSpeed = 100;
+
+  function type() {
+    const currentWord = words[wordIndex];
+
+    if (isDeleting) {
+      typingElement.textContent = currentWord.substring(0, charIndex - 1);
+      charIndex--;
+      typeSpeed = 50; // سرعة المسح أسرع
+    } else {
+      typingElement.textContent = currentWord.substring(0, charIndex + 1);
+      charIndex++;
+      typeSpeed = 100; // سرعة الكتابة عادية
+    }
+
+    if (!isDeleting && charIndex === currentWord.length) {
+      // انتهت الكلمة، انتظر قليلاً قبل المسح
+      isDeleting = true;
+      typeSpeed = 2000;
+    } else if (isDeleting && charIndex === 0) {
+      // انتهى المسح، انتقل للكلمة التالية
+      isDeleting = false;
+      wordIndex = (wordIndex + 1) % words.length;
+      typeSpeed = 500;
+    }
+
+    setTimeout(type, typeSpeed);
+  }
+
+  // Start typing
+  setTimeout(type, 1000);
+};
+
 // ===== Initialize all animations on page load =====
 window.addEventListener("load", function () {
   handleMissingImages();
@@ -507,6 +549,7 @@ window.addEventListener("load", function () {
   animateProjectCards();
   animateSkillCards();
   optimizeProjectImages();
+  initTypewriter();
 
   // Add loaded class to body
   document.body.classList.add("loaded");
