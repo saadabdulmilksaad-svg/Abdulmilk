@@ -496,6 +496,7 @@ section {
     text-align: center;
     transition: var(--transition);
     height: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 .skill-card:hover {
@@ -528,36 +529,67 @@ section {
     justify-content: center;
 }
 
-.skill-items .badge {
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
-.skill-bars {
-    max-width: 800px;
-    margin: 0 auto;
+.skill-list {
+    text-align: right;
+    /* محاذاة لليمين للغة العربية */
+    margin-top: 1.5rem;
 }
 
 .skill-bar-item {
-    margin-bottom: 2rem;
+    margin-bottom: 1.2rem;
 }
 
-.skill-bar-item span {
+.skill-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
     font-weight: 600;
+    font-size: 0.9rem;
     color: var(--dark-color);
 }
 
 .progress {
+    height: 8px;
     border-radius: 10px;
+    background-color: #e9ecef;
     overflow: hidden;
-    background: #e9ecef;
 }
 
 .progress-bar {
     background: var(--gradient-1);
     border-radius: 10px;
-    transition: width 1s ease;
+    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    /* حركة ناعمة */
+}
+
+.tool-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.6rem 1rem;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    color: var(--dark-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.tool-badge i {
+    margin-left: 0.5rem;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.tool-badge:hover {
+    background: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+.tool-badge:hover i {
+    color: #fff;
 }
 
 /* ===== Projects Section ===== */
