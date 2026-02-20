@@ -598,33 +598,3 @@ const optimizedScroll = debounce(() => {
 }, 100);
 
 window.addEventListener("scroll", optimizedScroll, eventOptions);
-
-// ===== Welcome Popup Logic =====
-document.addEventListener("DOMContentLoaded", () => {
-  const welcomePopup = document.getElementById('welcomePopup');
-  const closeWelcome = document.getElementById('closeWelcome');
-
-  if (welcomePopup && closeWelcome) {
-    // Show popup with a small delay
-    setTimeout(() => {
-      welcomePopup.classList.add('show');
-      // Disable scrolling when popup is open
-      document.body.style.overflow = 'hidden';
-    }, 1200);
-
-    closeWelcome.addEventListener('click', () => {
-      welcomePopup.classList.remove('show');
-      // Re-enable scrolling
-      document.body.style.overflow = 'auto';
-
-      // Optional: Store in sessionStorage so it doesn't show again in current session
-      sessionStorage.setItem('welcomeShown', 'true');
-    });
-
-    // Check if shown in current session
-    if (sessionStorage.getItem('welcomeShown') === 'true') {
-      welcomePopup.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
-  }
-});
