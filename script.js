@@ -267,6 +267,9 @@ if (contactForm) {
       if (fieldValue.length === 0) {
         isValid = false;
         errorMessage = 'يرجى إدخال رقم الهاتف';
+      } else if (!/^[0-9]+$/.test(fieldValue)) {
+        isValid = false;
+        errorMessage = 'رقم الهاتف يجب أن يحتوي على أرقام فقط';
       } else if (!/^[0-9]{9,15}$/.test(fieldValue)) {
         isValid = false;
         errorMessage = 'رقم الهاتف يجب أن يكون من 9 إلى 15 رقم';
@@ -293,6 +296,9 @@ if (contactForm) {
       } else if (fieldValue.length < 3) {
         isValid = false;
         errorMessage = 'الموضوع يجب أن يكون 3 أحرف على الأقل';
+      } else if (!/^[\u0600-\u06FFa-zA-Z\s]+$/.test(fieldValue)) {
+        isValid = false;
+        errorMessage = 'الموضوع يجب أن يحتوي على أحرف فقط (بدون أرقام أو رموز)';
       }
     }
 
@@ -304,6 +310,9 @@ if (contactForm) {
       } else if (fieldValue.length < 10) {
         isValid = false;
         errorMessage = `يرجى كتابة 10 أحرف على الأقل (${fieldValue.length}/10)`;
+      } else if (!/^[\u0600-\u06FFa-zA-Z\s\.\,\!\؟\،\n\r]+$/.test(fieldValue)) {
+        isValid = false;
+        errorMessage = 'الرسالة يجب أن تحتوي على نصوص فقط (بدون أرقام)';
       }
     }
 
@@ -439,10 +448,10 @@ ${message}
   });
 }
 
-// ===== Project Card Animations =====
-const projectCards = document.querySelectorAll(".project-card");
+// ===== Generic Scroll Animation Function =====
+const createScrollObserver = (selector, threshold = 0.1) => {
+  const elements = document.querySelectorAll(selector);
 
-const animateProjectCards = () => {
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry, index) => {
@@ -455,10 +464,10 @@ const animateProjectCards = () => {
         }
       });
     },
-    { threshold: 0.1 },
+    { threshold: threshold },
   );
 
-  projectCards.forEach((card) => {
+  elements.forEach((card) => {
     card.style.opacity = "0";
     card.style.transform = "translateY(30px)";
     card.style.transition = "all 0.6s ease";
@@ -466,32 +475,9 @@ const animateProjectCards = () => {
   });
 };
 
-// ===== Skill Cards Animation =====
-const skillCards = document.querySelectorAll(".skill-card");
-
-const animateSkillCards = () => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.style.opacity = "1";
-            entry.target.style.transform = "translateY(0)";
-          }, index * 100);
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.1 },
-  );
-
-  skillCards.forEach((card) => {
-    card.style.opacity = "0";
-    card.style.transform = "translateY(30px)";
-    card.style.transition = "all 0.6s ease";
-    observer.observe(card);
-  });
-};
+// Initialize specific animations
+const animateProjectCards = () => createScrollObserver(".project-card");
+const animateSkillCards = () => createScrollObserver(".skill-card");
 
 // ===== Optimize Project Images =====
 const optimizeProjectImages = () => {
