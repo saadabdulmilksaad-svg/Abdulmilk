@@ -1,5 +1,6 @@
 # ===== InfinityFree Optimized .htaccess =====
 Options -Indexes
+DirectoryIndex index.html
 AddDefaultCharset UTF-8
 
 # تفعيل ضغط الملفات (Gzip)
