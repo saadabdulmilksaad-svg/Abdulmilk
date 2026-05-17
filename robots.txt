@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://abdulmilk-saad.kesug.com/sitemap.xml
+Sitemap: https://bucolic-creponne-d8cc89.netlify.app/sitemap.xml
