@@ -1,6 +1,6 @@
 // Service Worker for Portfolio Website
-// Version: 9.0
-const CACHE_NAME = "portfolio-cache-v9";
+// Version: 10.0
+const CACHE_NAME = "portfolio-cache-v10";
 const urlsToCache = [
   "./",
   "./index.html",
