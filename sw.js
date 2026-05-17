@@ -1,11 +1,11 @@
 // Service Worker for Portfolio Website
-// Version: 8.0
-const CACHE_NAME = "portfolio-cache-v8";
+// Version: 9.0
+const CACHE_NAME = "portfolio-cache-v9";
 const urlsToCache = [
   "./",
   "./index.html",
-  "./style.css?v=8",
-  "./script.js?v=8",
+  "./style.css",
+  "./script.js",
   "./images/image.webp",
   "./images/project1-ai-courser.svg",
   "./images/project2-nasr.svg",
@@ -16,48 +16,15 @@ const urlsToCache = [
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log("Opened cache v8");
+      console.log("Opened cache v9");
       return cache.addAll(urlsToCache);
     }),
   );
+  // تفعيل السيرفس ووركر الجديد فوراً بدون انتظار
   self.skipWaiting();
 });
 
-// Fetch event - Cache First, then Network
-self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      // Return cached response if found
-      if (response) {
-        // Fetch fresh version in background for NEXT time (Stale-While-Revalidate)
-        fetch(event.request).then((networkResponse) => {
-          if (networkResponse && networkResponse.status === 200) {
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(event.request, networkResponse);
-            });
-          }
-        }).catch(() => { });
-        return response;
-      }
-
-      // If not in cache, fetch from network
-      return fetch(event.request).then((networkResponse) => {
-        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== "basic") {
-          return networkResponse;
-        }
-
-        const responseToCache = networkResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseToCache);
-        });
-
-        return networkResponse;
-      });
-    })
-  );
-});
-
-// Activate event - clean up old caches and claim clients immediately
+// Activate event - حذف الكاش القديم والسيطرة على جميع الصفحات فوراً
 self.addEventListener("activate", (event) => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
@@ -74,9 +41,34 @@ self.addEventListener("activate", (event) => {
         );
       })
       .then(() => {
-        // Take control of all clients immediately
+        // السيطرة على جميع العملاء فوراً
         return self.clients.claim();
       }),
+  );
+});
+
+// Fetch event - Network First Strategy (الشبكة أولاً، ثم الكاش كبديل)
+// هذا يضمن ظهور التغييرات فوراً عند تعديل الكود
+self.addEventListener("fetch", (event) => {
+  // تجاهل طلبات POST والطلبات الخارجية
+  if (event.request.method !== "GET") return;
+
+  event.respondWith(
+    fetch(event.request)
+      .then((networkResponse) => {
+        // إذا نجح الطلب من الشبكة، حدّث الكاش واعرض النسخة الجديدة
+        if (networkResponse && networkResponse.status === 200 && networkResponse.type === "basic") {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+        }
+        return networkResponse;
+      })
+      .catch(() => {
+        // إذا فشلت الشبكة (لا إنترنت)، ارجع للكاش
+        return caches.match(event.request);
+      })
   );
 });
 
