@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap:https://saadabdulmilksaad-svg.github.io/Abdulmilk/sitemap.xml
+Sitemap: https://abdulmilk.vercel.app/sitemap.xml
