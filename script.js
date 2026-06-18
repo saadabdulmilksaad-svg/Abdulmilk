@@ -907,6 +907,7 @@ function initHero3D() {
 // ===== GPU-Accelerated 3D Parallax Tilt =====
 // ==========================================
 function init3DTilt() {
+  if (window.innerWidth < 992) return;
   const elements = document.querySelectorAll('[data-tilt]');
   
   elements.forEach(el => {
@@ -1197,6 +1198,9 @@ function init3DTilt() {
 
       // Update button label
       langIcon.textContent = lang === 'ar' ? 'EN' : 'عر';
+
+      // Reset and update testimonials carousel direction and layout
+      window.dispatchEvent(new Event('resize'));
 
       document.body.classList.remove('lang-switching');
     }, 150);

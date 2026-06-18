@@ -92,6 +92,13 @@
     box-sizing: border-box;
 }
 
+/* Fix icon spacing in RTL and LTR layouts natively using logical margins */
+.btn i, 
+.btn-submit-modern i,
+.navbar-brand i {
+    margin-inline-end: 8px !important;
+}
+
 html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
@@ -404,6 +411,8 @@ p.lead.text-muted {
 
 /* Code Window */
 .code-window {
+    width: 100%;
+    max-width: 450px;
     background: rgba(8, 8, 17, 0.8);
     border-radius: 15px;
     overflow: hidden;
@@ -1573,7 +1582,18 @@ footer a:hover {
         text-align: center;
     }
 
-    /* project-image uses aspect-ratio, no height override needed */
+    /* Project cards overlay optimization for mobile */
+    .project-overlay {
+        opacity: 1 !important;
+        background: linear-gradient(135deg, rgba(26, 26, 46, 0.7) 0%, rgba(74, 144, 226, 0.8) 100%) !important;
+    }
+    .project-card:hover .project-image img {
+        transform: none !important;
+    }
+    .project-overlay .btn {
+        transform: none !important;
+        box-shadow: var(--shadow-sm) !important;
+    }
 }
 
 /* Mobile Landscape and Small Tablets (576px - 767px) */
@@ -1767,18 +1787,26 @@ footer a:hover {
 
     .hero-buttons {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
         gap: 12px;
         margin-top: 20px;
+        width: 100%;
     }
 
     .hero-buttons .btn {
-        width: 100% !important;
+        flex: 1;
+        max-width: 160px;
+        width: auto !important;
         margin: 0 !important;
-        padding: 0.8rem 1rem;
-        display: flex;
+        padding: 0.6rem 1rem;
+        font-size: 0.92rem;
+        border-radius: 50px;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
+        white-space: nowrap;
     }
 
     .hero-profile-image {
@@ -1810,6 +1838,17 @@ footer a:hover {
         width: 45px;
         height: 45px;
         bottom: 15px;
+    }
+
+    /* Testimonials cards mobile adjustments */
+    .testimonial-card {
+        padding: 1.5rem !important;
+        border-radius: 16px !important;
+    }
+    .testimonial-text {
+        font-size: 0.9rem !important;
+        line-height: 1.6 !important;
+        margin-bottom: 1rem !important;
     }
 }
 
@@ -2072,7 +2111,7 @@ button,
 }
 
 /* ===== Back to Top Button with Circular SVG Progress ===== */
-#backToTop {
+.back-to-top {
     position: fixed;
     bottom: 100px;
     left: 25px;
@@ -2095,18 +2134,18 @@ button,
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 242, 254, 0.15);
 }
 
-#backToTop.show {
+.back-to-top.show {
     opacity: 1;
     visibility: visible;
     transform: translateY(0) scale(1);
 }
 
-#backToTop:hover {
+.back-to-top:hover {
     transform: translateY(-4px) scale(1.1);
     box-shadow: 0 8px 30px rgba(0, 242, 254, 0.35), 0 0 25px rgba(0, 242, 254, 0.2);
 }
 
-#backToTop i {
+.back-to-top i {
     font-size: 1.1rem;
     color: #fff;
     position: absolute;

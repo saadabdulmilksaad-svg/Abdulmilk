@@ -203,18 +203,20 @@
       <a class="navbar-brand fw-bold" href="#home">
         <i class="bi bi-code-slash me-2"></i>عبدالملك سعد
       </a>
-      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-expanded="false" aria-label="تبديل القائمة">
-        <div class="hamburger">
-          <span class="bar"></span>
-          <span class="bar"></span>
-          <span class="bar"></span>
-        </div>
-      </button>
-      <!-- Language Toggle Button -->
-      <button id="lang-toggle" class="lang-btn" aria-label="تغيير اللغة" title="Switch Language">
-        <span id="lang-icon">EN</span>
-      </button>
+      <!-- Group for togglers on mobile, fits beautifully -->
+      <div class="d-flex align-items-center order-lg-last gap-2">
+        <button id="lang-toggle" class="lang-btn" aria-label="تغيير اللغة" title="Switch Language">
+          <span id="lang-icon">EN</span>
+        </button>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-expanded="false" aria-label="تبديل القائمة">
+          <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </div>
+        </button>
+      </div>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto text-center">
           <li class="nav-item">
@@ -242,7 +244,7 @@
     <div class="hero-overlay"></div>
     <div class="container">
       <div class="row align-items-center min-vh-100">
-        <div class="col-lg-6">
+        <div class="col-lg-6 order-2 order-lg-1">
           <div class="hero-content text-white">
             <h1 class="display-3 fw-bold mb-4">
               مرحباً، أنا <span class="text-gradient">عبدالملك سعد </span>
@@ -273,7 +275,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 order-1 order-lg-2">
           <div class="hero-image">
             <!-- Three.js Interactive WebGL Scene -->
             <div id="hero-3d-webgl"></div>
@@ -727,7 +729,7 @@
   </a>
 
   <!-- Back to Top Button with Circular Progress -->
-  <button id="backToTop" aria-label="العودة للأعلى" title="العودة للأعلى">
+  <button id="backToTop" class="back-to-top" aria-label="العودة للأعلى" title="العودة للأعلى">
     <svg class="progress-ring" viewBox="0 0 44 44">
       <circle class="progress-ring__bg" cx="22" cy="22" r="18"/>
       <circle class="progress-ring__fill" id="progressCircle" cx="22" cy="22" r="18"/>
