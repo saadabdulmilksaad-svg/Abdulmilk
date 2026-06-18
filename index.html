@@ -191,6 +191,9 @@
 </head>
 
 <body>
+  <!-- Fullscreen 3D Background Particles -->
+  <canvas id="bg-particles"></canvas>
+
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="navbar">
     <div class="container">
@@ -238,7 +241,9 @@
               مرحباً، أنا <span class="text-gradient" >عبدالملك سعد </span>
             </h1>
             <p class="lead mb-4">
-            </p><p>
+              أنا <span class="typing-text"></span><span class="cursor">|</span>
+            </p>
+            <p class="mb-4">
               أنا مطور مواقع ويب من اليمن متخصص في تصميم وتطوير مواقع سريعة، متجاوبة، ومهيأة لمحركات البحث SEO.
             </p>  
             <div class="hero-buttons">
@@ -263,7 +268,10 @@
         </div>
         <div class="col-lg-6">
           <div class="hero-image">
-            <div class="hero-profile-image">
+            <!-- Three.js Interactive WebGL Scene -->
+            <div id="hero-3d-webgl"></div>
+
+            <div class="hero-profile-image" data-tilt>
               <picture>
                 <source srcset="images/image.webp" type="image/webp">
                 <img src="images/image.webp" alt="عبدالملك سعد" class="profile-img" width="300" height="300"
@@ -272,7 +280,7 @@
               <div class="profile-border"></div>
               <div class="profile-glow"></div>
             </div>
-            <div class="code-window">
+            <div class="code-window" data-tilt>
               <div class="code-header">
                 <span class="dot dot-red"></span>
                 <span class="dot dot-yellow"></span>
@@ -317,7 +325,7 @@
           </p>
           <div class="row g-4">
             <div class="col-md-6">
-              <div class="feature-box">
+              <div class="feature-box" data-tilt>
                 <div class="feature-icon-wrapper">
                   <i class="bi bi-palette"></i>
                 </div>
@@ -326,7 +334,7 @@
               </div>
             </div>
             <div class="col-md-6">
-              <div class="feature-box">
+              <div class="feature-box" data-tilt>
                 <div class="feature-icon-wrapper">
                   <i class="bi bi-code-slash"></i>
                 </div>
@@ -335,7 +343,7 @@
               </div>
             </div>
             <div class="col-md-6">
-              <div class="feature-box">
+              <div class="feature-box" data-tilt>
                 <div class="feature-icon-wrapper">
                   <i class="bi bi-phone"></i>
                 </div>
@@ -344,7 +352,7 @@
               </div>
             </div>
             <div class="col-md-6">
-              <div class="feature-box">
+              <div class="feature-box" data-tilt>
                 <div class="feature-icon-wrapper">
                   <i class="bi bi-lightning-charge"></i>
                 </div>
@@ -366,7 +374,7 @@
       </div>
       <div class="row g-4">
         <div class="col-md-4">
-          <div class="skill-card">
+          <div class="skill-card" data-tilt>
             <div class="skill-icon"><i class="bi bi-code-slash"></i></div>
             <h4>Frontend</h4>
             <div class="skill-list">
@@ -404,7 +412,7 @@
           </div>
         </div>
         <div class="col-md-4">
-          <div class="skill-card">
+          <div class="skill-card" data-tilt>
             <div class="skill-icon"><i class="bi bi-server"></i></div>
             <h4>Backend</h4>
             <div class="skill-list">
@@ -442,7 +450,7 @@
           </div>
         </div>
         <div class="col-md-4">
-          <div class="skill-card">
+          <div class="skill-card" data-tilt>
             <div class="skill-icon"><i class="bi bi-tools"></i></div>
             <h4>أدوات</h4>
             <div class="skill-items">
@@ -470,7 +478,7 @@
       <div class="row g-4 justify-content-center">
         <!-- Project 1 -->
         <div class="col-md-6 col-lg-4">
-          <div class="project-card">
+          <div class="project-card" data-tilt>
             <div class="project-image">
               <img src="images/project1-ai-courser.svg" alt="موقع دورات الذكاء الاصطناعي" width="800" height="600"
                 loading="lazy" />
@@ -496,7 +504,7 @@
 
         <!-- Project 2 -->
         <div class="col-md-6 col-lg-4">
-          <div class="project-card">
+          <div class="project-card" data-tilt>
             <div class="project-image">
               <img src="images/project2-nasr.svg" alt="مشروع نصر" width="800" height="600" loading="lazy" />
               <div class="project-overlay">
@@ -519,7 +527,7 @@
         </div>
         <!-- Project 3 -->
         <div class="col-md-6 col-lg-4">
-          <div class="project-card">
+          <div class="project-card" data-tilt>
             <div class="project-image">
               <img src="images/project3-ai-website.svg" alt="موقع الذكاء الاصطناعي" width="800" height="600"
                 loading="lazy" />
@@ -554,15 +562,15 @@
       </div>
       <div class="row g-4">
         <div class="col-lg-4">
-          <div class="contact-info-wrapper">
-            <div class="contact-info-card mb-3">
+          <div class="contact-info-wrapper" data-tilt>
+            <div class="contact-info-card mb-3" data-tilt>
               <div class="contact-info-icon"><i class="bi bi-geo-alt-fill"></i></div>
               <div class="contact-info-content">
                 <h5>العنوان</h5>
                 <p class="text-muted mb-0">صنعاء، اليمن</p>
               </div>
             </div>
-            <div class="contact-info-card mb-3">
+            <div class="contact-info-card mb-3" data-tilt>
               <div class="contact-info-icon"><i class="bi bi-telephone-fill"></i></div>
               <div class="contact-info-content">
                 <h5>الهاتف</h5>
@@ -572,7 +580,7 @@
           </div>
         </div>
         <div class="col-lg-8">
-          <div class="contact-form-card">
+          <div class="contact-form-card" data-tilt>
             <form id="contactForm" class="contact-form">
               <div class="row g-4">
                 <div class="col-md-6">
@@ -649,8 +657,9 @@
 
 
   <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
-  <script src="script.js?v=10" defer></script>
+  <script src="script.js?v=11" defer></script>
 </body>
 
 </html>

@@ -439,7 +439,7 @@ ${message}
           if (btnText && btnLoading) {
             btnText.innerHTML = '<i class="bi bi-whatsapp me-2"></i>إرسال عبر واتساب';
             btnText.style.display = 'flex';
-            submitButton.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            submitButton.style.background = 'linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%)';
             submitButton.disabled = false;
           }
         }, 2000);
@@ -551,6 +551,11 @@ window.addEventListener("load", function () {
   optimizeProjectImages();
   initTypewriter();
 
+  // Initialize 3D Engines
+  init3DBackground();
+  initHero3D();
+  init3DTilt();
+
   // Add loaded class to body
   document.body.classList.add("loaded");
 
@@ -598,3 +603,365 @@ const optimizedScroll = debounce(() => {
 }, 100);
 
 window.addEventListener("scroll", optimizedScroll, eventOptions);
+
+// ==========================================
+// ===== 3D Particle Constellation Bg =====
+// ==========================================
+function init3DBackground() {
+  const canvas = document.getElementById('bg-particles');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  
+  let width = canvas.width = window.innerWidth;
+  let height = canvas.height = window.innerHeight;
+  
+  window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
+  
+  const particles = [];
+  const particleCount = Math.min(80, Math.floor((width * height) / 15000));
+  const maxDistance = 110;
+  const fov = 350;
+  
+  let mouse = { x: null, y: null, targetX: null, targetY: null, radius: 150 };
+  
+  window.addEventListener('mousemove', (e) => {
+    mouse.targetX = e.clientX;
+    mouse.targetY = e.clientY;
+  });
+  
+  window.addEventListener('mouseleave', () => {
+    mouse.targetX = null;
+    mouse.targetY = null;
+  });
+  
+  class Particle {
+    constructor() {
+      this.reset(true);
+    }
+    
+    reset(init = false) {
+      this.x = (Math.random() - 0.5) * width * 1.5;
+      this.y = (Math.random() - 0.5) * height * 1.5;
+      this.z = init ? Math.random() * 800 - 400 : 400;
+      
+      this.vx = (Math.random() - 0.5) * 0.6;
+      this.vy = (Math.random() - 0.5) * 0.6;
+      this.vz = (Math.random() - 0.5) * 0.4 - 0.1;
+      
+      this.baseRadius = Math.random() * 1.5 + 1;
+      this.color = `rgba(0, 242, 254, ${Math.random() * 0.35 + 0.15})`;
+    }
+    
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      this.z += this.vz;
+      
+      // Rotate slowly in Y
+      const angleY = 0.0003;
+      const cosY = Math.cos(angleY);
+      const sinY = Math.sin(angleY);
+      const xRot = this.x * cosY - this.z * sinY;
+      const zRot = this.z * cosY + this.x * sinY;
+      this.x = xRot;
+      this.z = zRot;
+      
+      // Reset if too close or too far
+      if (this.z < -fov || Math.abs(this.x) > width * 2 || Math.abs(this.y) > height * 2 || this.z > 600) {
+        this.reset(false);
+      }
+      
+      this.scale = fov / (fov + this.z);
+      this.projX = this.x * this.scale + width / 2;
+      this.projY = this.y * this.scale + height / 2;
+      
+      // Gravitational push away from cursor
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = this.projX - mouse.x;
+        const dy = this.projY - mouse.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < mouse.radius) {
+          const force = (mouse.radius - dist) / mouse.radius;
+          this.projX += (dx / dist) * force * 10 * this.scale;
+          this.projY += (dy / dist) * force * 10 * this.scale;
+        }
+      }
+    }
+    
+    draw() {
+      if (this.z <= -fov) return;
+      ctx.beginPath();
+      ctx.arc(this.projX, this.projY, this.baseRadius * this.scale, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    }
+  }
+  
+  for (let i = 0; i < particleCount; i++) {
+    particles.push(new Particle());
+  }
+  
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+    
+    // Smooth mouse movements
+    if (mouse.targetX !== null && mouse.targetY !== null) {
+      if (mouse.x === null) {
+        mouse.x = mouse.targetX;
+        mouse.y = mouse.targetY;
+      } else {
+        mouse.x += (mouse.targetX - mouse.x) * 0.08;
+        mouse.y += (mouse.targetY - mouse.y) * 0.08;
+      }
+    } else {
+      mouse.x = null;
+      mouse.y = null;
+    }
+    
+    particles.forEach(p => {
+      p.update();
+      p.draw();
+    });
+    
+    // Connect particles with 3D lines
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const p1 = particles[i];
+        const p2 = particles[j];
+        
+        const dx = p1.x - p2.x;
+        const dy = p1.y - p2.y;
+        const dz = p1.z - p2.z;
+        const dist3D = Math.sqrt(dx * dx + dy * dy + dz * dz);
+        
+        if (dist3D < maxDistance) {
+          const projDx = p1.projX - p2.projX;
+          const projDy = p1.projY - p2.projY;
+          const dist2D = Math.sqrt(projDx * projDx + projDy * projDy);
+          
+          if (dist2D < maxDistance * 1.4) {
+            const alpha = (1 - dist3D / maxDistance) * 0.1 * Math.min(p1.scale, p2.scale);
+            ctx.beginPath();
+            ctx.moveTo(p1.projX, p1.projY);
+            ctx.lineTo(p2.projX, p2.projY);
+            ctx.strokeStyle = `rgba(0, 242, 254, ${alpha})`;
+            ctx.lineWidth = 0.5 * Math.min(p1.scale, p2.scale);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+    
+    requestAnimationFrame(animate);
+  }
+  
+  animate();
+}
+
+// ==========================================
+// ===== Three.js WebGL Scene in Hero =====
+// ==========================================
+function initHero3D() {
+  if (typeof THREE === 'undefined') {
+    console.warn("Three.js is not loaded. Skipping WebGL scene.");
+    return;
+  }
+  
+  const container = document.getElementById('hero-3d-webgl');
+  if (!container) return;
+  
+  let width = container.clientWidth || 350;
+  let height = container.clientHeight || 350;
+  
+  const scene = new THREE.Scene();
+  
+  const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 100);
+  camera.position.z = 3.5;
+  
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+  
+  // Particle sphere geometry
+  const particleCount = 750;
+  const geometry = new THREE.BufferGeometry();
+  const positions = new Float32Array(particleCount * 3);
+  const originalPositions = new Float32Array(particleCount * 3);
+  const colors = new Float32Array(particleCount * 3);
+  
+  const color1 = new THREE.Color('#00f2fe'); // Neon Cyan
+  const color2 = new THREE.Color('#7f53ac'); // Violet glow
+  
+  for (let i = 0; i < particleCount; i++) {
+    const u = Math.random();
+    const v = Math.random();
+    const theta = u * 2.0 * Math.PI;
+    const phi = Math.acos(2.0 * v - 1.0);
+    const r = 1.35; // Sphere size
+    
+    const x = r * Math.sin(phi) * Math.cos(theta);
+    const y = r * Math.sin(phi) * Math.sin(theta);
+    const z = r * Math.cos(phi);
+    
+    positions[i * 3] = x;
+    positions[i * 3 + 1] = y;
+    positions[i * 3 + 2] = z;
+    
+    originalPositions[i * 3] = x;
+    originalPositions[i * 3 + 1] = y;
+    originalPositions[i * 3 + 2] = z;
+    
+    const mixColor = color1.clone().lerp(color2, (x + r) / (r * 2));
+    colors[i * 3] = mixColor.r;
+    colors[i * 3 + 1] = mixColor.g;
+    colors[i * 3 + 2] = mixColor.b;
+  }
+  
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  
+  // Procedural glowing round dot texture
+  function createTexture() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 16;
+    canvas.height = 16;
+    const ctx = canvas.getContext('2d');
+    const grad = ctx.createRadialGradient(8, 8, 0, 8, 8, 8);
+    grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+    grad.addColorStop(0.3, 'rgba(0, 242, 254, 0.7)');
+    grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 16, 16);
+    return new THREE.CanvasTexture(canvas);
+  }
+  
+  const material = new THREE.PointsMaterial({
+    size: 0.065,
+    vertexColors: true,
+    map: createTexture(),
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+  });
+  
+  const points = new THREE.Points(geometry, material);
+  scene.add(points);
+  
+  // Track cursor coordinates
+  let mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+  window.addEventListener('mousemove', (e) => {
+    const rect = container.getBoundingClientRect();
+    mouse.targetX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.targetY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+  });
+  
+  window.addEventListener('resize', () => {
+    width = container.clientWidth || 350;
+    height = container.clientHeight || 350;
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(width, height);
+  });
+  
+  const clock = new THREE.Clock();
+  
+  function animate() {
+    requestAnimationFrame(animate);
+    
+    const time = clock.getElapsedTime();
+    
+    // Smooth interpolation
+    mouse.x += (mouse.targetX - mouse.x) * 0.05;
+    mouse.y += (mouse.targetY - mouse.y) * 0.05;
+    
+    // Rotate relative to mouse and time
+    points.rotation.y = time * 0.08 + mouse.x * 0.3;
+    points.rotation.x = time * 0.05 + mouse.y * 0.3;
+    
+    // Vertex displacement wave
+    const positionsAttr = geometry.attributes.position;
+    for (let i = 0; i < particleCount; i++) {
+      const x = originalPositions[i * 3];
+      const y = originalPositions[i * 3 + 1];
+      const z = originalPositions[i * 3 + 2];
+      
+      const wave = Math.sin(x * 2.5 + time * 1.2) * 0.045 + Math.cos(y * 2.5 + time * 1.0) * 0.045;
+      
+      positionsAttr.setX(i, x * (1.0 + wave));
+      positionsAttr.setY(i, y * (1.0 + wave));
+      positionsAttr.setZ(i, z * (1.0 + wave));
+    }
+    positionsAttr.needsUpdate = true;
+    
+    renderer.render(scene, camera);
+  }
+  
+  animate();
+}
+
+// ==========================================
+// ===== GPU-Accelerated 3D Parallax Tilt =====
+// ==========================================
+function init3DTilt() {
+  const elements = document.querySelectorAll('[data-tilt]');
+  
+  elements.forEach(el => {
+    el.classList.add('tilt-element');
+    
+    // Inject glare overlays
+    if (!el.querySelector('.tilt-glare-wrapper')) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'tilt-glare-wrapper';
+      const glare = document.createElement('div');
+      glare.className = 'tilt-glare';
+      wrapper.appendChild(glare);
+      el.appendChild(wrapper);
+    }
+    
+    el.addEventListener('mousemove', (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const xPercent = x / rect.width;
+      const yPercent = y / rect.height;
+      
+      const maxTilt = 12; // tilt degree limit
+      const rotateX = (0.5 - yPercent) * maxTilt;
+      const rotateY = (xPercent - 0.5) * maxTilt;
+      
+      // Update transforms directly on GPU
+      el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+      
+      const glare = el.querySelector('.tilt-glare');
+      if (glare) {
+        glare.style.left = `${xPercent * 100}%`;
+        glare.style.top = `${yPercent * 100}%`;
+      }
+    });
+    
+    el.addEventListener('mouseenter', () => {
+      el.style.transition = 'none';
+      const glare = el.querySelector('.tilt-glare');
+      if (glare) {
+        glare.style.transition = 'none';
+        glare.style.opacity = '1';
+      }
+    });
+    
+    el.addEventListener('mouseleave', () => {
+      el.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)';
+      el.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      
+      const glare = el.querySelector('.tilt-glare');
+      if (glare) {
+        glare.style.transition = 'opacity 0.4s ease';
+        glare.style.opacity = '0';
+      }
+    });
+  });
+}
