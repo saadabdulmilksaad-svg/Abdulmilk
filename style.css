@@ -2051,3 +2051,281 @@ button,
         font-size: 1.4rem;
     }
 }
+
+/* ===================================================
+   ✨ MODERN FEATURES — Reading Progress, Back-to-Top,
+      Language Toggle, Testimonials
+   =================================================== */
+
+/* ===== Reading Progress Bar ===== */
+#reading-progress-bar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 0%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--secondary-color));
+    z-index: 9999;
+    transition: width 0.1s linear;
+    border-radius: 0 2px 2px 0;
+    box-shadow: 0 0 12px rgba(0, 242, 254, 0.7);
+}
+
+/* ===== Back to Top Button with Circular SVG Progress ===== */
+#backToTop {
+    position: fixed;
+    bottom: 100px;
+    left: 25px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(7, 7, 20, 0.85);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px) scale(0.8);
+    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 242, 254, 0.15);
+}
+
+#backToTop.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+#backToTop:hover {
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: 0 8px 30px rgba(0, 242, 254, 0.35), 0 0 25px rgba(0, 242, 254, 0.2);
+}
+
+#backToTop i {
+    font-size: 1.1rem;
+    color: #fff;
+    position: absolute;
+    z-index: 2;
+    transition: transform 0.3s ease;
+}
+
+#backToTop:hover i {
+    transform: translateY(-2px);
+}
+
+/* SVG Ring */
+.progress-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 52px;
+    height: 52px;
+    transform: rotate(-90deg);
+}
+
+.progress-ring__bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.08);
+    stroke-width: 3;
+}
+
+.progress-ring__fill {
+    fill: none;
+    stroke: var(--primary-color);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 113.1;
+    stroke-dashoffset: 113.1;
+    transition: stroke-dashoffset 0.2s linear;
+    filter: drop-shadow(0 0 4px rgba(0, 242, 254, 0.8));
+}
+
+/* ===== Language Toggle Button ===== */
+.lang-btn {
+    background: rgba(0, 242, 254, 0.08);
+    border: 1px solid rgba(0, 242, 254, 0.25);
+    border-radius: 8px;
+    color: var(--primary-color);
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 0.3rem 0.7rem;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-left: 0.5rem;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    white-space: nowrap;
+}
+
+.lang-btn:hover {
+    background: var(--primary-color);
+    color: var(--dark-color);
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+    transform: scale(1.05);
+}
+
+/* ===== Testimonials Section ===== */
+.testimonials-section {
+    background: linear-gradient(180deg, rgba(7,7,20,0) 0%, rgba(0, 242, 254, 0.03) 50%, rgba(7,7,20,0) 100%);
+    overflow: hidden;
+}
+
+.testimonials-carousel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.testimonials-track {
+    display: flex;
+    gap: 1.5rem;
+    transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    will-change: transform;
+}
+
+.testimonial-card {
+    min-width: calc(100% / 1);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+    .testimonial-card {
+        min-width: calc(50% - 0.75rem);
+    }
+}
+
+@media (min-width: 1024px) {
+    .testimonial-card {
+        min-width: calc(33.333% - 1rem);
+    }
+}
+
+.testimonial-card::before {
+    content: '\201C';
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    font-size: 8rem;
+    color: rgba(0, 242, 254, 0.06);
+    font-family: Georgia, serif;
+    line-height: 1;
+    pointer-events: none;
+}
+
+.testimonial-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.testimonial-card:hover::after {
+    opacity: 1;
+}
+
+.testimonial-card:hover {
+    border-color: rgba(0, 242, 254, 0.2);
+    box-shadow: var(--glass-glow-hover);
+    transform: translateY(-6px);
+}
+
+.testimonial-stars {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+}
+
+.testimonial-text {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.8) !important;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.testimonial-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--dark-color);
+    flex-shrink: 0;
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+}
+
+.testimonial-author strong {
+    display: block;
+    font-size: 0.95rem;
+    color: #fff;
+    font-weight: 700;
+}
+
+.testimonial-author span {
+    font-size: 0.8rem;
+    color: var(--primary-color);
+    opacity: 0.8;
+}
+
+/* Dots Navigation */
+.testimonials-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 2rem;
+}
+
+.testimonials-dots .dot-nav {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    padding: 0;
+}
+
+.testimonials-dots .dot-nav.active {
+    background: var(--primary-color);
+    width: 24px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+}
+
+/* Language transition for body */
+body.lang-switching * {
+    transition: opacity 0.2s ease !important;
+    opacity: 0.7;
+}

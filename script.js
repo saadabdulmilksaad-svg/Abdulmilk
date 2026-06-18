@@ -965,3 +965,245 @@ function init3DTilt() {
     });
   });
 }
+
+// ===========================================================
+// ✨ MODERN FEATURES: Reading Progress, Back-To-Top, 
+//    Testimonials Carousel, Language Toggle
+// ===========================================================
+
+// ===== 1. Reading Progress Bar + Back-To-Top Circular Ring =====
+(function () {
+  const progressBar = document.getElementById('reading-progress-bar');
+  const backToTopBtn = document.getElementById('backToTop');
+  const progressCircle = document.getElementById('progressCircle');
+  const circumference = 113.1; // 2 * π * r (r=18)
+
+  function updateReadingProgress() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+
+    // Reading progress bar width
+    if (progressBar) {
+      progressBar.style.width = progress + '%';
+    }
+
+    // Back-to-top button visibility
+    if (backToTopBtn) {
+      if (scrollTop > 300) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+
+      // SVG circle fill
+      if (progressCircle) {
+        const offset = circumference - (progress / 100) * circumference;
+        progressCircle.style.strokeDashoffset = offset;
+      }
+    }
+  }
+
+  window.addEventListener('scroll', updateReadingProgress, { passive: true });
+  updateReadingProgress();
+
+  // Scroll to top on click
+  if (backToTopBtn) {
+    backToTopBtn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+})();
+
+// ===== 2. Testimonials Auto-Carousel with Touch Swipe =====
+(function () {
+  const track = document.getElementById('testimonialsTrack');
+  const dotsContainer = document.getElementById('testimonialsDots');
+  if (!track) return;
+
+  const cards = Array.from(track.querySelectorAll('.testimonial-card'));
+  if (cards.length === 0) return;
+
+  let current = 0;
+  let autoTimer = null;
+  let visibleCount = 1;
+
+  function getVisibleCount() {
+    const w = window.innerWidth;
+    if (w >= 1024) return 3;
+    if (w >= 768) return 2;
+    return 1;
+  }
+
+  function getCardWidth() {
+    return cards[0].getBoundingClientRect().width;
+  }
+
+  function getGap() {
+    const style = window.getComputedStyle(track);
+    return parseFloat(style.gap || style.columnGap || '24');
+  }
+
+  function totalSlides() {
+    return Math.max(0, cards.length - visibleCount);
+  }
+
+  function goTo(index) {
+    visibleCount = getVisibleCount();
+    const max = totalSlides();
+    current = Math.max(0, Math.min(index, max));
+    const offset = current * (getCardWidth() + getGap());
+    track.style.transform = `translateX(${document.dir === 'rtl' ? offset : -offset}px)`;
+    updateDots();
+  }
+
+  function buildDots() {
+    if (!dotsContainer) return;
+    dotsContainer.innerHTML = '';
+    visibleCount = getVisibleCount();
+    const count = totalSlides() + 1;
+    for (let i = 0; i < count; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'dot-nav' + (i === current ? ' active' : '');
+      dot.setAttribute('aria-label', `الانتقال للتقييم ${i + 1}`);
+      dot.addEventListener('click', () => { goTo(i); restartAuto(); });
+      dotsContainer.appendChild(dot);
+    }
+  }
+
+  function updateDots() {
+    if (!dotsContainer) return;
+    dotsContainer.querySelectorAll('.dot-nav').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  function next() {
+    visibleCount = getVisibleCount();
+    goTo(current < totalSlides() ? current + 1 : 0);
+  }
+
+  function restartAuto() {
+    clearInterval(autoTimer);
+    autoTimer = setInterval(next, 4500);
+  }
+
+  // Init
+  visibleCount = getVisibleCount();
+  buildDots();
+  restartAuto();
+
+  window.addEventListener('resize', () => {
+    buildDots();
+    goTo(0);
+    restartAuto();
+  });
+
+  // Touch / swipe support
+  let touchStartX = 0;
+  let touchEndX = 0;
+  track.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+  track.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) next();
+      else goTo(current > 0 ? current - 1 : totalSlides());
+      restartAuto();
+    }
+  });
+
+  // Pause on hover
+  track.addEventListener('mouseenter', () => clearInterval(autoTimer));
+  track.addEventListener('mouseleave', restartAuto);
+})();
+
+// ===== 3. Language Toggle (Arabic / English) =====
+(function () {
+  const langBtn = document.getElementById('lang-toggle');
+  const langIcon = document.getElementById('lang-icon');
+  if (!langBtn) return;
+
+  let currentLang = 'ar';
+
+  // All translatable elements
+  const translations = {
+    navLinks: [
+      { selector: 'a[href="#home"].nav-link',       ar: 'الرئيسية',      en: 'Home' },
+      { selector: 'a[href="#about"].nav-link',      ar: 'من أنا',        en: 'About' },
+      { selector: 'a[href="#skills"].nav-link',     ar: 'المهارات',      en: 'Skills' },
+      { selector: 'a[href="#projects"].nav-link',   ar: 'المشاريع',      en: 'Projects' },
+      { selector: 'a[href="#contact"].nav-link',    ar: 'اتصل بي',       en: 'Contact' },
+    ]
+  };
+
+  function applyLanguage(lang) {
+    document.body.classList.add('lang-switching');
+
+    setTimeout(() => {
+      // Nav links
+      translations.navLinks.forEach(item => {
+        const el = document.querySelector(item.selector);
+        if (el) el.textContent = item[lang];
+      });
+
+      // All data-ar / data-en attributes
+      document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+      });
+
+      // Input placeholders
+      const placeholders = {
+        ar: { name: 'الاسم الكامل', phone: 'رقم الهاتف (مثال: 779830449)', email: 'البريد الإلكتروني', subject: 'الموضوع', message: 'رسالتك' },
+        en: { name: 'Full Name', phone: 'Phone Number (e.g. 779830449)', email: 'Email Address', subject: 'Subject', message: 'Your Message' }
+      };
+      ['name', 'phone', 'email', 'subject', 'message'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.placeholder = placeholders[lang][id];
+      });
+
+      // Hero brand
+      const brand = document.querySelector('.navbar-brand');
+      if (brand) brand.innerHTML = lang === 'ar'
+        ? '<i class="bi bi-code-slash me-2"></i>عبدالملك سعد'
+        : '<i class="bi bi-code-slash me-2"></i>Abdulmilk Saad';
+
+      // Hero headline
+      const heroDesc = document.querySelector('.hero-content > p:not(.lead)');
+      if (heroDesc) heroDesc.textContent = lang === 'ar'
+        ? 'أنا مطور مواقع ويب من اليمن متخصص في تصميم وتطوير مواقع سريعة، متجاوبة، ومهيأة لمحركات البحث SEO.'
+        : 'I am a web developer from Yemen specializing in designing fast, responsive, and SEO-optimized websites.';
+
+      // Buttons
+      const projectsBtn = document.querySelector('.hero-buttons a[href="#projects"]');
+      if (projectsBtn) projectsBtn.innerHTML = lang === 'ar'
+        ? '<i class="bi bi-briefcase me-2"></i>مشاريعي'
+        : '<i class="bi bi-briefcase me-2"></i>Projects';
+
+      const contactBtn = document.querySelector('.hero-buttons a[href="#contact"]');
+      if (contactBtn) contactBtn.innerHTML = lang === 'ar'
+        ? '<i class="bi bi-envelope me-2"></i>تواصل معي'
+        : '<i class="bi bi-envelope me-2"></i>Contact Me';
+
+      // Submit button
+      const submitBtn = document.querySelector('.btn-text');
+      if (submitBtn) submitBtn.innerHTML = lang === 'ar'
+        ? '<i class="bi bi-whatsapp me-2"></i>إرسال عبر واتساب'
+        : '<i class="bi bi-whatsapp me-2"></i>Send via WhatsApp';
+
+      // HTML dir and lang attribute
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+      // Update button label
+      langIcon.textContent = lang === 'ar' ? 'EN' : 'عر';
+
+      document.body.classList.remove('lang-switching');
+    }, 150);
+  }
+
+  langBtn.addEventListener('click', () => {
+    currentLang = currentLang === 'ar' ? 'en' : 'ar';
+    applyLanguage(currentLang);
+  });
+})();

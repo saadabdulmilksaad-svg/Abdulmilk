@@ -191,6 +191,9 @@
 </head>
 
 <body>
+  <!-- Reading Progress Bar -->
+  <div id="reading-progress-bar"></div>
+
   <!-- Fullscreen 3D Background Particles -->
   <canvas id="bg-particles"></canvas>
 
@@ -207,6 +210,10 @@
           <span class="bar"></span>
           <span class="bar"></span>
         </div>
+      </button>
+      <!-- Language Toggle Button -->
+      <button id="lang-toggle" class="lang-btn" aria-label="تغيير اللغة" title="Switch Language">
+        <span id="lang-icon">EN</span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto text-center">
@@ -554,6 +561,70 @@
     </div>
   </section>
 
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="py-5 testimonials-section">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="section-title" data-ar="آراء العملاء" data-en="Client Reviews">آراء العملاء</h2>
+        <p class="text-muted" data-ar="ما يقوله من عملوا معي" data-en="What my clients say">ما يقوله من عملوا معي</p>
+      </div>
+      <div class="testimonials-carousel">
+        <div class="testimonials-track" id="testimonialsTrack">
+
+          <div class="testimonial-card">
+            <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+            <p class="testimonial-text" data-ar="عبدالملك مطور محترف جداً، سلّم المشروع في الوقت المحدد وبجودة ممتازة. سأتعامل معه مستقبلاً بكل تأكيد." data-en="Abdulmilk is a very professional developer, delivered the project on time with excellent quality. I will definitely work with him again.">عبدالملك مطور محترف جداً، سلّم المشروع في الوقت المحدد وبجودة ممتازة. سأتعامل معه مستقبلاً بكل تأكيد.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">أ</div>
+              <div>
+                <strong data-ar="أحمد الشرجبي" data-en="Ahmed Al-Sharjabi">أحمد الشرجبي</strong>
+                <span data-ar="صاحب مشروع تجاري" data-en="Business Owner">صاحب مشروع تجاري</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+            <p class="testimonial-text" data-ar="تصميم الموقع فاق توقعاتي! الواجهة جميلة والكود منظم. أنصح الجميع بالتعامل مع عبدالملك." data-en="The website design exceeded my expectations! Beautiful interface and clean code. I recommend everyone to work with Abdulmilk.">تصميم الموقع فاق توقعاتي! الواجهة جميلة والكود منظم. أنصح الجميع بالتعامل مع عبدالملك.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">م</div>
+              <div>
+                <strong data-ar="محمد العمري" data-en="Mohammed Al-Omari">محمد العمري</strong>
+                <span data-ar="مدير شركة ناشئة" data-en="Startup Manager">مدير شركة ناشئة</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+            <p class="testimonial-text" data-ar="سرعة في التنفيذ واحترافية عالية. الموقع الذي بناه لي يعمل بشكل مثالي على جميع الأجهزة." data-en="Fast execution and high professionalism. The website he built for me works perfectly on all devices.">سرعة في التنفيذ واحترافية عالية. الموقع الذي بناه لي يعمل بشكل مثالي على جميع الأجهزة.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">س</div>
+              <div>
+                <strong data-ar="سارة القحطاني" data-en="Sara Al-Qahtani">سارة القحطاني</strong>
+                <span data-ar="مصممة جرافيك" data-en="Graphic Designer">مصممة جرافيك</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+            <p class="testimonial-text" data-ar="من أفضل المطورين الذين تعاملت معهم. فهم متطلباتي بسرعة وقدّم حلولاً إبداعية رائعة." data-en="One of the best developers I have worked with. He understood my requirements quickly and provided amazing creative solutions.">من أفضل المطورين الذين تعاملت معهم. فهم متطلباتي بسرعة وقدّم حلولاً إبداعية رائعة.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">ع</div>
+              <div>
+                <strong data-ar="عمر الزيدي" data-en="Omar Al-Zaidi">عمر الزيدي</strong>
+                <span data-ar="مستثمر ورجل أعمال" data-en="Investor & Businessman">مستثمر ورجل أعمال</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="testimonials-dots" id="testimonialsDots"></div>
+    </div>
+  </section>
+
   <!-- Contact Section -->
   <section id="contact" class="py-5 contact-section">
     <div class="container">
@@ -655,11 +726,20 @@
     <i class="bi bi-whatsapp"></i>
   </a>
 
+  <!-- Back to Top Button with Circular Progress -->
+  <button id="backToTop" aria-label="العودة للأعلى" title="العودة للأعلى">
+    <svg class="progress-ring" viewBox="0 0 44 44">
+      <circle class="progress-ring__bg" cx="22" cy="22" r="18"/>
+      <circle class="progress-ring__fill" id="progressCircle" cx="22" cy="22" r="18"/>
+    </svg>
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
 
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
-  <script src="script.js?v=11" defer></script>
+  <script src="script.js?v=12" defer></script>
 </body>
 
 </html>
