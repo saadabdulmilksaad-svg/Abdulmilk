@@ -10,7 +10,14 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <!-- Security: X-Frame, XSS protection handled by GitHub Pages -->
+  <!-- Security & Indexing Control -->
+  <!-- Force Google to index only Vercel URL, not GitHub Pages -->
+  <script>
+    // Redirect GitHub Pages visitors to Vercel
+    if (window.location.hostname.includes('github.io')) {
+      window.location.replace('https://abdulmilk.vercel.app' + window.location.pathname + window.location.search);
+    }
+  </script>
   <link rel="icon" type="image/webp" href="images/image.webp" />
   <link rel="canonical" href="https://abdulmilk.vercel.app/" />
   <title>مطور مواقع ويب | عبدالملك سعد - تصميم وبرمجة مواقع احترافية</title>
