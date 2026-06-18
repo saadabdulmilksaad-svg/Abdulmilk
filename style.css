@@ -302,10 +302,11 @@ p.lead.text-muted {
 
 .hero-profile-image {
     position: relative;
-    width: 300px;
-    height: 300px;
+    width: clamp(200px, 42vw, 320px);
+    aspect-ratio: 1 / 1;
     margin: 0 auto 2rem;
     z-index: 3;
+    flex-shrink: 0;
 }
 
 .profile-img {
@@ -500,16 +501,19 @@ p.lead.text-muted {
 /* ===== Section Styles ===== */
 section {
     padding: 5rem 0;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .section-title {
-    font-size: 2.5rem;
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
     font-weight: 700;
     color: #fff;
     /* اللون الافتراضي للأقسام المظلمة */
     margin-bottom: 1rem;
     position: relative;
     display: inline-block;
+    max-width: 100%;
 }
 
 .bg-light {
@@ -804,6 +808,7 @@ section {
     overflow: hidden;
     width: 100%;
     aspect-ratio: 4 / 3;
+    min-height: 180px;
     /* استخدام خاصية حديثة بدلاً من padding-top لدعم أفضل للمتصفحات */
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
@@ -1492,8 +1497,7 @@ footer a:hover {
     }
 
     .hero-profile-image {
-        width: 280px;
-        height: 280px;
+        width: clamp(220px, 35vw, 300px);
     }
 }
 
@@ -1554,18 +1558,14 @@ footer a:hover {
     }
 
     .hero-profile-image {
-        width: 260px;
-        height: 260px;
+        width: clamp(200px, 45vw, 260px);
         margin: 0 auto 2rem;
     }
 
     .code-window {
         max-width: 500px;
         margin: 0 auto;
-    }
-
-    .section-title {
-        font-size: 2.2rem;
+        width: 100%;
     }
 
     .about-image {
@@ -1573,9 +1573,7 @@ footer a:hover {
         text-align: center;
     }
 
-    .project-image {
-        height: 240px;
-    }
+    /* project-image uses aspect-ratio, no height override needed */
 }
 
 /* Mobile Landscape and Small Tablets (576px - 767px) */
@@ -1602,7 +1600,7 @@ footer a:hover {
     }
 
     .hero-content h1 {
-        font-size: 2rem;
+        font-size: clamp(1.6rem, 5vw, 2rem);
         margin-bottom: 1.5rem;
         line-height: 1.3;
     }
@@ -1611,18 +1609,13 @@ footer a:hover {
         font-size: 1rem;
     }
 
-    .section-title {
-        font-size: 1.8rem;
-    }
-
     .section-title::after {
         width: 50px;
         height: 3px;
     }
 
     .hero-profile-image {
-        width: 220px;
-        height: 220px;
+        width: clamp(170px, 48vw, 220px);
         margin-bottom: 1.5rem;
     }
 
@@ -1646,14 +1639,20 @@ footer a:hover {
 
     .code-window {
         margin-top: 1rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .code-content {
-        padding: 1.5rem;
+        padding: 1.25rem;
+        overflow-x: auto;
     }
 
     .code-content pre {
-        font-size: 0.8rem;
+        font-size: 0.78rem;
+        white-space: pre-wrap;
+        word-break: break-word;
     }
 
     .about-image {
@@ -1683,9 +1682,7 @@ footer a:hover {
         font-size: 1.75rem;
     }
 
-    .project-image {
-        height: 200px;
-    }
+    /* project-image uses aspect-ratio - no height override */
 
     .project-content {
         padding: 1.25rem;
@@ -1785,13 +1782,11 @@ footer a:hover {
     }
 
     .hero-profile-image {
-        width: 240px;
-        height: 240px;
+        width: clamp(160px, 55vw, 220px);
         margin: 20px auto;
     }
 
     .section-title {
-        font-size: 1.75rem;
         margin-bottom: 2.5rem;
     }
 
@@ -1799,9 +1794,7 @@ footer a:hover {
         margin-bottom: 1rem;
     }
 
-    .project-image {
-        height: 180px;
-    }
+    /* project-image uses aspect-ratio - no height override */
 
     .contact-form-card {
         padding: 1.5rem 1rem !important;
@@ -1823,34 +1816,30 @@ footer a:hover {
 /* حل نهائي لمشكلة الهوامش الجانبية */
 body {
     overflow-x: hidden !important;
+    max-width: 100vw;
 }
 
 /* Fix Bootstrap Row Overflow safely */
 .row {
     margin-right: calc(-.5 * var(--bs-gutter-x));
     margin-left: calc(-.5 * var(--bs-gutter-x));
+    max-width: 100%;
 }
 
 /* Ensure proper container padding on mobile */
 @media (max-width: 575.98px) {
-
     .container,
     .container-fluid {
-        padding-right: 1.5rem;
-        padding-left: 1.5rem;
+        padding-right: 1rem;
+        padding-left: 1rem;
     }
 }
 
-/* تم توحيد أبعاد الصورة لمنع التخبط في التصميم */
-.hero-profile-image {
-    width: 350px;
-    height: 350px;
-    max-width: 100%;
-    aspect-ratio: 1 / 1;
-}
-
-.section-title {
-    font-size: 2.75rem;
+/* ===== Desktop sizes (992px+) ===== */
+@media (min-width: 992px) {
+    .hero-profile-image {
+        width: clamp(280px, 28vw, 350px);
+    }
 }
 
 
@@ -2009,5 +1998,56 @@ button,
 
     .social-links-contact {
         justify-content: center;
+    }
+}
+/* ===== Mobile Hero Order Fix =====
+   On mobile: image (order-1) shows first, text (order-2) shows second */
+@media (max-width: 991.98px) {
+    .hero-image {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 1rem;
+    }
+
+    .col-lg-6.order-1 {
+        padding-top: 1rem;
+    }
+
+    .code-window pre,
+    .code-window code {
+        white-space: pre-wrap !important;
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+    }
+
+    .hero-section .row {
+        overflow-x: hidden;
+    }
+}
+
+/* ===== Ultra-small devices (up to 360px) ===== */
+@media (max-width: 360px) {
+    .hero-profile-image {
+        width: 150px;
+    }
+
+    .hero-buttons .btn {
+        font-size: 0.85rem;
+        padding: 0.65rem 0.85rem;
+    }
+
+    .social-link {
+        width: 42px;
+        height: 42px;
+        font-size: 1.2rem;
+    }
+
+    .navbar-brand {
+        font-size: 1rem;
+    }
+
+    .section-title {
+        font-size: 1.4rem;
     }
 }
